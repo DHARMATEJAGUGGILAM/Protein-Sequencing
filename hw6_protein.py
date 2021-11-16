@@ -17,7 +17,12 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
+    f = open(filename)
+    text = f.read()
+    x = ""
+    for i in text.splitlines():
+        x+= i
+    return x
 
 
 '''
@@ -27,7 +32,16 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
+    x=[]
+    y=[]
+    for i in range(startIndex, len(dna), 3):
+        x.append(dna[i:i+3])
+        if dna[i:i+3]=='TAG' or dna[i:i+3]=='TAA' or dna[i:i+3]=='TGA':
+            break
+    for string in x:
+        string=string.replace("T","U")
+        y.append(string)
+    return y
 
 
 '''
@@ -38,7 +52,15 @@ Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
     import json
-    return
+    a={}
+    f=open(filename)
+    b=json.load(f)
+    for x,y in b.items():
+        
+        for i in y:
+            c=i.replace("T", "U")
+            a[c]=x
+    return a
 
 
 '''
@@ -48,7 +70,13 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
+    x=[]
+    if codons[0]=='AUG':
+        x.append("Start")
+        for i in range(1,len(codons)):
+            if codons[i] in codonD.keys():
+                x.append(codonD[codons[i]])
+    return x
 
 
 '''
@@ -58,7 +86,22 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    x=readFile(dnaFilename)
+    y=makeCodonDictionary(codonFilename)
+    i=0
+    j=0
+    k=[]
+    while i<len(x):
+        if x[i:i+3]=="ATG":
+            m=dnaToRna(x,i)
+            n=generateProtein(m,y)
+            k.append(n)
+            i=i+3*len(m)
+        else:
+            i+=1
+            j+=1
+
+    return k
 
 
 def runWeek1():
@@ -190,6 +233,10 @@ if __name__ == "__main__":
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     runWeek1()
+    # test.testReadFile()
+    # test.testDnaToRna()
+    # test.testMakeCodonDictionary()
+    #test.testGenerateProtein()
 
     ## Uncomment these for Week 2 ##
     """
