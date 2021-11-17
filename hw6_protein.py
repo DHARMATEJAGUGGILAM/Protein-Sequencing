@@ -88,6 +88,7 @@ Returns: 2D list of strs
 def synthesizeProteins(dnaFilename, codonFilename):
     x=readFile(dnaFilename)
     y=makeCodonDictionary(codonFilename)
+    #print(y)
     i=0
     j=0
     k=[]
@@ -100,7 +101,6 @@ def synthesizeProteins(dnaFilename, codonFilename):
         else:
             i+=1
             j+=1
-
     return k
 
 
@@ -120,8 +120,12 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: 2D list of strs
 '''
 def commonProteins(proteinList1, proteinList2):
-    return
-
+    x=[]
+    for i in proteinList1:
+        for j in proteinList2:
+            if i==j and i not in x:
+                x.append(j)
+    return x
 
 '''
 combineProteins(proteinList)
@@ -237,14 +241,15 @@ if __name__ == "__main__":
     # test.testDnaToRna()
     # test.testMakeCodonDictionary()
     #test.testGenerateProtein()
+    test.testCommonProteins()
 
     ## Uncomment these for Week 2 ##
-    """
+    '''
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     runWeek2()
-    """
+    '''
 
     ## Uncomment these for Week 3 ##
     """
