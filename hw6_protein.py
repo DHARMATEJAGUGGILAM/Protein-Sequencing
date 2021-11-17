@@ -156,7 +156,6 @@ def aminoAcidDictionary(aaList):
             x[i]=1
         else:
             x[i]+=1
-
     return x
 
 
