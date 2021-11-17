@@ -17,7 +17,12 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
+    f = open(filename)
+    text = f.read()
+    x = ""
+    for i in text.splitlines():
+        x+= i
+    return x
 
 
 '''
@@ -27,7 +32,16 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
+    x=[]
+    y=[]
+    for i in range(startIndex, len(dna), 3):
+        x.append(dna[i:i+3])
+        if dna[i:i+3]=='TAG' or dna[i:i+3]=='TAA' or dna[i:i+3]=='TGA':
+            break
+    for string in x:
+        string=string.replace("T","U")
+        y.append(string)
+    return y
 
 
 '''
@@ -38,7 +52,15 @@ Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
     import json
-    return
+    a={}
+    f=open(filename)
+    b=json.load(f)
+    for x,y in b.items():
+        
+        for i in y:
+            c=i.replace("T", "U")
+            a[c]=x
+    return a
 
 
 '''
@@ -48,7 +70,13 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
+    x=[]
+    if codons[0]=='AUG':
+        x.append("Start")
+        for i in range(1,len(codons)):
+            if codons[i] in codonD.keys():
+                x.append(codonD[codons[i]])
+    return x
 
 
 '''
@@ -58,7 +86,22 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    x=readFile(dnaFilename)
+    y=makeCodonDictionary(codonFilename)
+    #print(y)
+    i=0
+    j=0
+    k=[]
+    while i<len(x):
+        if x[i:i+3]=="ATG":
+            m=dnaToRna(x,i)
+            n=generateProtein(m,y)
+            k.append(n)
+            i=i+3*len(m)
+        else:
+            i+=1
+            j+=1
+    return k
 
 
 def runWeek1():
@@ -77,8 +120,12 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: 2D list of strs
 '''
 def commonProteins(proteinList1, proteinList2):
-    return
-
+    x=[]
+    for i in proteinList1:
+        for j in proteinList2:
+            if i==j and i not in x:
+                x.append(j)
+    return x
 
 '''
 combineProteins(proteinList)
@@ -87,7 +134,13 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def combineProteins(proteinList):
-    return
+    a=[]
+    for i in proteinList:
+        for j in i:
+            if i not in a:
+                a.append(j)
+
+    return a
 
 
 '''
@@ -97,7 +150,13 @@ Parameters: list of strs
 Returns: dict mapping strs to ints
 '''
 def aminoAcidDictionary(aaList):
-    return
+    x={}
+    for i in aaList:
+        if i not in x:
+            x[i]=1
+        else:
+            x[i]+=1
+    return x
 
 
 '''
@@ -107,7 +166,34 @@ Parameters: 2D list of strs ; 2D list of strs ; float
 Returns: 2D list of values
 '''
 def findAminoAcidDifferences(proteinList1, proteinList2, cutoff):
-    return
+    x=combineProteins(proteinList1)
+    y=combineProteins(proteinList2)
+    p=aminoAcidDictionary(x)
+    q=aminoAcidDictionary(y)
+    t=[]
+    diff=[]        
+    m={}
+    n={}    
+    for i in p:
+        m[i] = p[i]/len(x)
+        if i not in t and i !="Start" and i !="Stop":
+            t.append(i)
+    for j in q:
+        n[j] = q[j]/len(y)
+        if j not in t and j !="Start" and j!="Stop":
+            t.append(j)
+    for k in t:
+        f1=0
+        f2=0
+        if k in m:
+            f1= m[k]
+        if k in n:
+            f2= n[k]
+        difference = f2-f1
+        if difference < -cutoff or difference > cutoff:
+            z=[k, f1, f2]
+            diff.append(z)
+    return diff
 
 
 '''
@@ -117,6 +203,24 @@ Parameters: 2D list of strs ; 2D list of values
 Returns: None
 '''
 def displayTextResults(commonalities, differences):
+    print("The following proteins occurred in both DNA Sequences:")
+    for i in commonalities:
+        x=""
+        l=i[1:(len(i)-1)]
+        c=0
+        for j in l:
+            x+=j
+            c+=1
+            if c!=len(l):
+                x+="-"
+        if len(x)!=0:
+            print(x)
+    print("The following amino acids occurred at very different rates in the two DNA sequences:" )
+    for i in differences:
+        m=i[0]
+        f1=round(i[1]*100,2)
+        f2=round(i[2]*100,2)
+        print(str(m)+" "+str(f1)+" % in Seq1"+","+str(f2)+"% in Seq2")
     return
 
 
@@ -190,14 +294,23 @@ if __name__ == "__main__":
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     runWeek1()
+    # test.testReadFile()
+    # test.testDnaToRna()
+    # test.testMakeCodonDictionary()
+    #test.testGenerateProtein()
+    test.testCommonProteins()
+    test.testCombineProteins()
+    test.testAminoAcidDictionary()
+    test.testFindAminoAcidDifferences()
+
 
     ## Uncomment these for Week 2 ##
-    """
+    
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     runWeek2()
-    """
+    
 
     ## Uncomment these for Week 3 ##
     """
