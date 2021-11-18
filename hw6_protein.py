@@ -280,8 +280,18 @@ createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None)
 Parameters: list of strs ; list of floats ; str ; list of floats ; str ; [optional] list of strs
 Returns: None
 '''
-
+import numpy as np
 def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
+    import matplotlib.pyplot as plt
+    w = 0.3
+    x = np.arange(len(xLabels))
+    plt.bar(x,freqList1, width=-w, align='edge', label=label1, edgecolor=edgeList)
+    plt.bar(x,freqList2, width=w, align='edge', label=label2, edgecolor=edgeList)
+    plt.xticks(ticks=list(range(len(xLabels))), labels=xLabels, rotation = "vertical")
+    plt.legend()
+    plt.title("amino acids")
+    plt.show()
+    return
     
     return
 
