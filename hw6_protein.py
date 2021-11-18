@@ -6,7 +6,6 @@ Roll Number:
 
 import hw6_protein_tests as test
 import numpy
-
 import matplotlib
 
 
@@ -144,7 +143,6 @@ def combineProteins(proteinList):
         for j in i:
             if i not in a:
                 a.append(j)
-
     return a
 
 
@@ -247,7 +245,17 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: list of strs
 '''
 def makeAminoAcidLabels(proteinList1, proteinList2):
-    return
+    x = []
+    for i in proteinList1:
+        for j in i:
+            if j not in x:
+                x.append(j)
+    for a in proteinList2:
+        for y in a:
+            if y not in x:
+                x.append(y)
+    return sorted(x)
+
 '''
 setupChartData(labels, proteinList)
 #3 [Hw6]
@@ -255,8 +263,7 @@ Parameters: list of strs ; 2D list of strs
 Returns: list of floats
 '''
 def setupChartData(labels, proteinList):
-    return
-
+   return
 
 '''
 createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None)
@@ -264,10 +271,10 @@ createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None)
 Parameters: list of strs ; list of floats ; str ; list of floats ; str ; [optional] list of strs
 Returns: None
 '''
-def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
-    import matplotlib.pyplot as plt
-    return
 
+def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
+    
+    return
 
 '''
 makeEdgeList(labels, biggestDiffs)
@@ -276,7 +283,8 @@ Parameters: list of strs ; 2D list of values
 Returns: list of strs
 '''
 def makeEdgeList(labels, biggestDiffs):
-    return
+   
+    return 
 
 
 '''
@@ -286,6 +294,7 @@ Parameters: no parameters
 Returns: None
 '''
 def runFullProgram():
+   
     return
 
 
@@ -301,11 +310,13 @@ if __name__ == "__main__":
     # test.testDnaToRna()
     # test.testMakeCodonDictionary()
     #test.testGenerateProtein()
-    test.testCommonProteins()
-    test.testCombineProteins()
-    test.testAminoAcidDictionary()
-    test.testFindAminoAcidDifferences()
-    
+    # test.testCommonProteins()
+    # test.testCombineProteins()
+    # test.testAminoAcidDictionary()
+    # test.testFindAminoAcidDifferences()
+    # test.testMakeAminoAcidLabels()
+    # test.testSetupChartData()
+    test.testMakeAminoAcidLabels()
 
 
     ## Uncomment these for Week 2 ##
@@ -317,9 +328,9 @@ if __name__ == "__main__":
     
 
     ## Uncomment these for Week 3 ##
-    '''
+    
     print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
     test.week3Tests()
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     runFullProgram()
-    '''
+    
