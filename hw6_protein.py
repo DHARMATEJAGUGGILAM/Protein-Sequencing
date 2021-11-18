@@ -5,6 +5,11 @@ Roll Number:
 """
 
 import hw6_protein_tests as test
+import numpy
+
+import matplotlib
+
+
 
 project = "Protein" # don't edit this
 
@@ -243,8 +248,6 @@ Returns: list of strs
 '''
 def makeAminoAcidLabels(proteinList1, proteinList2):
     return
-
-
 '''
 setupChartData(labels, proteinList)
 #3 [Hw6]
@@ -302,6 +305,7 @@ if __name__ == "__main__":
     test.testCombineProteins()
     test.testAminoAcidDictionary()
     test.testFindAminoAcidDifferences()
+    
 
 
     ## Uncomment these for Week 2 ##
@@ -313,9 +317,9 @@ if __name__ == "__main__":
     
 
     ## Uncomment these for Week 3 ##
-    """
+    '''
     print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
     test.week3Tests()
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     runFullProgram()
-    """
+    '''
