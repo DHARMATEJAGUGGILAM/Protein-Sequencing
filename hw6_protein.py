@@ -321,6 +321,16 @@ Parameters: no parameters
 Returns: None
 '''
 def runFullProgram():
+    humanproteins = synthesizeProteins("data/human_p53.txt","data/codon_table.json")
+    elephantproteins = synthesizeProteins("data/elephant_p53.txt","data/codon_table.json")
+    x = commonProteins(humanproteins,elephantproteins)
+    y = findAminoAcidDifferences(humanproteins,elephantproteins,0.005)
+    displayTextResults(x,y)
+    z = makeAminoAcidLabels(humanproteins,elephantproteins)
+    f1 = setupChartData(z,humanproteins)
+    f2 = setupChartData(z,elephantproteins)
+    edges = makeEdgeList(z,y)
+    createChart(z, f1, "human", f2, "elephant", edgeList=edges) 
     return
 
 
