@@ -292,8 +292,6 @@ def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
     plt.title("amino acids")
     plt.show()
     return
-    
-    return
 
 '''
 makeEdgeList(labels, biggestDiffs)
@@ -302,8 +300,18 @@ Parameters: list of strs ; 2D list of values
 Returns: list of strs
 '''
 def makeEdgeList(labels, biggestDiffs):
-   
-    return 
+    a=[]
+    b=[]
+    for i in range(len(biggestDiffs)):
+        if biggestDiffs[i][0] not in a:
+            a.append(biggestDiffs[i][0])
+    for x in range(len(labels)):
+        if labels[x] in a:
+            b.append("black")
+        else:
+            b.append("white")
+    return b
+
 
 
 '''
@@ -313,7 +321,16 @@ Parameters: no parameters
 Returns: None
 '''
 def runFullProgram():
-   
+    humanproteins = synthesizeProteins("data/human_p53.txt","data/codon_table.json")
+    elephantproteins = synthesizeProteins("data/elephant_p53.txt","data/codon_table.json")
+    x = commonProteins(humanproteins,elephantproteins)
+    y = findAminoAcidDifferences(humanproteins,elephantproteins,0.005)
+    displayTextResults(x,y)
+    z = makeAminoAcidLabels(humanproteins,elephantproteins)
+    f1 = setupChartData(z,humanproteins)
+    f2 = setupChartData(z,elephantproteins)
+    edges = makeEdgeList(z,y)
+    createChart(z, f1, "human", f2, "elephant", edgeList=edges)  
     return
 
 
